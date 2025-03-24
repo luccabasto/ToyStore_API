@@ -1,0 +1,36 @@
+## Build
+bin/
+obj/
+
+## VS e VS Code
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## NuGet
+*.nupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Testes
+TestResults/
+*.coverage
+*.coveragexml
+
+## Logs e temp
+*.log
+*.tmp
+
+## Sistema operacional
+Thumbs.db
+.DS_Store
+
+## Config VSCode
+.vscode/
+
+*.csproj.user
+
