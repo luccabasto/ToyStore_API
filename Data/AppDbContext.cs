@@ -9,6 +9,10 @@ namespace ToyStore_API.Data
         {
 
         }
-        public DbSet<Toys> TB_Toys { get; set; }
+        public DbSet<Toys> Toys { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Toys>().ToTable("TB_TOYS");
+        }
     }
 }
