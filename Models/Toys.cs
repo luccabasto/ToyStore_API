@@ -5,6 +5,7 @@ namespace ToyStore_API.Models
 {
     public class Toys
     {
+        [Key]
         public int Id_toy { get; set; }
 
         [Required]

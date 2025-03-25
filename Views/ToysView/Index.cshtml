@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ToyStore_API.Models.Toys>
+@{
+    ViewData["Title"] = "Lista de Brinquedos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">Lista de Brinquedos</h2>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Classificação</th>
+            <th>Marca</th>
+            <th>Preço</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var brinquedo in Model)
+        {
+            <tr>
+                <td>@brinquedo.Name_toy</td>
+                <td>@brinquedo.Type_toy</td>
+                <td>@brinquedo.Classification_toy</td>
+                <td>@brinquedo.Brand_toy</td>
+                <td>R$ @brinquedo.Price_toy.ToString("F2")</td>
+            </tr>
+        }
+    </tbody>
+</table>
