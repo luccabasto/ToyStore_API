@@ -19,9 +19,8 @@ namespace ToyStore_API.Models
         [StringLength(50)]
         public string Type_toy { get; set; }
 
-        [Required]
-        [StringLength(20)]  
-        //[Range(0, 12, ErrorMessage = "Classificação do brinquedo deve ser entre 0 e 12 anos.")]
+        [Required] 
+        [Range(0, 12, ErrorMessage = "Classificação do brinquedo deve ser entre 0 e 12 anos.")]
         public int Classification_toy { get; set; }
 
         [Required]
@@ -30,7 +29,7 @@ namespace ToyStore_API.Models
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
-        //[Range(0.01, double.MaxValue, ErrorMessage = "Preço deve ser maior que 0.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Preço deve ser maior que 0.")]
         public decimal Price_toy { get; set; }
     }
 }
