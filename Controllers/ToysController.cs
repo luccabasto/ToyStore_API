@@ -35,7 +35,7 @@ namespace ToyStore_API.Controllers
             if (toy.Classification_toy > 12)
                 return BadRequest("Só é permitido brinquedos para crianças até 12 anos.");
 
-            _context.TB_Toy.Add(toy);
+            _context.TB_Toys.Add(toy);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = toy.Id_toy }, toy);
         }
