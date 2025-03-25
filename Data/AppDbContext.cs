@@ -9,6 +9,6 @@ namespace ToyStore_API.Data
         {
 
         }
-        public DbSet<Toys> Toys { get; set; }
+        public DbSet<Toys> TB_Toys { get; set; }
     }
 }
