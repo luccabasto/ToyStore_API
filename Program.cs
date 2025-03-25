@@ -25,7 +25,9 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://github.com/luccabasto/ToyStore_API")
         }
     });
-
+    var xmlFile = "ToyStore.API.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
 });
 
 var app = builder.Build();
