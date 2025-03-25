@@ -21,5 +21,6 @@ namespace ToyStore_API.Models
         public string Brand_toy { get; set; }
 
         [Range(0.01, double.MaxValue, ErrorMessage = "Preço deve ser maior que 0.")]
+        public decimal Price_toy { get; set; }
     }
 }
