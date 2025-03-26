@@ -85,7 +85,6 @@ namespace ToyStore_API.Controllers
             }
         }
 
-        // Update
         /// <summary>
         /// Atualizar um Brinquedo
         /// </summary>
@@ -94,10 +93,8 @@ namespace ToyStore_API.Controllers
         /// <response code="404">Não encontrado</response>
         /// <response code="204">Sucesso</response>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Toys toy)
+        public async Task<IActionResult> Update(int id, [FromBody] Toys toy)
         {
-            if (id != toy.Id_toy) return BadRequest();
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -106,7 +103,13 @@ namespace ToyStore_API.Controllers
                 var existingToy = await _context.Toys.FindAsync(id);
                 if (existingToy == null) return NotFound();
 
-                _context.Entry(toy).State = EntityState.Modified;
+                // Atualiza campos manualmente
+                existingToy.Name_toy = toy.Name_toy;
+                existingToy.Type_toy = toy.Type_toy;
+                existingToy.Classification_toy = toy.Classification_toy;
+                existingToy.Brand_toy = toy.Brand_toy;
+                existingToy.Price_toy = toy.Price_toy;
+
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
