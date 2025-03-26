@@ -119,12 +119,21 @@ namespace ToyStore_API.Controllers
             }
         }
         /// <summary>
-        /// Atualizar um Brinquedo existente
+        /// Editar parcialmente um Brinquedo
         /// </summary>
         /// <param name="id">Identificador do Brinquedo</param>
+        /// <remarks>
+        /// Exemplo:\n
+        /// {
+        ///   "name_toy": "Novo nome",
+        ///   "price_toy": 89.90
+        /// }
+        /// </remarks>
+        /// <param name="patchData">Objeto JSON com os campos a alterar</param>
         /// <returns>Não retorna informações</returns>
-        /// <response code="404">Não encontrado</response>
         /// <response code="204">Sucesso</response>
+        /// <response code="404">Brinquedo não encontrado</response>
+        /// <response code="500">Erro interno</response>
         [HttpPatch("{id}")]
         public async Task<IActionResult> Patch(int id, [FromBody] JsonElement patchData)
         {
