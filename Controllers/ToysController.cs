@@ -2,6 +2,7 @@
 using ToyStore_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace ToyStore_API.Controllers
 {
@@ -121,6 +122,52 @@ namespace ToyStore_API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
+        }
+        /// <summary>
+        /// Editar parcialmente um Brinquedo
+        /// </summary>
+        /// <param name="id">Identificador do Brinquedo</param>
+        /// <remarks>
+        /// Exemplo:\n
+        /// {
+        ///   "name_toy": "Novo nome",
+        ///   "price_toy": 89.90
+        /// }
+        /// </remarks>
+        /// <param name="patchData">Objeto JSON com os campos a alterar</param>
+        /// <returns>Não retorna informações</returns>
+        /// <response code="204">Sucesso</response>
+        /// <response code="404">Brinquedo não encontrado</response>
+        /// <response code="500">Erro interno</response>
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Patch(int id, [FromBody] JsonElement patchData)
+        {
+            var toy = await _context.Toys.FindAsync(id);
+            if (toy == null) return NotFound();
+
+            try
+            {
+                var data = JsonSerializer.Deserialize<Dictionary<string, object>>(patchData.ToString()!);
+
+                foreach (var campo in data!)
+                {
+                    switch (campo.Key.ToLower())
+                    {
+                        case "name_toy": toy.Name_toy = campo.Value?.ToString(); break;
+                        case "type_toy": toy.Type_toy = campo.Value?.ToString(); break;
+                        case "classification_toy": toy.Classification_toy = Convert.ToInt32(campo.Value); break;
+                        case "brand_toy": toy.Brand_toy = campo.Value?.ToString(); break;
+                        case "price_toy": toy.Price_toy = Convert.ToDecimal(campo.Value); break;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno ao aplicar PATCH: {ex.Message}");
             }
         }
 
