@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ToyStore_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("Toys")]
     public class ToysController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -36,7 +36,7 @@ namespace ToyStore_API.Controllers
         }
         // Get by Id
         /// <summary>   
-        /// Obter um Paciente
+        /// Obter um Brinquedo
         /// </summary>
         /// <param name="id">Identificador do Brinquedo</param>
         /// <returns>Dados do Brinquedo</returns>
@@ -96,19 +96,27 @@ namespace ToyStore_API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Toys toy)
         {
-            if (id != toy.Id_toy) return BadRequest();
+            if (id != toy.Id_toy)
+            {
+                return BadRequest("ID do brinquedo não corresponde.");
+            }
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var existingToy = await _context.Toys.FindAsync(id);
+            if (existingToy == null)
+            {
+                return NotFound("Brinquedo não encontrado.");
+            }
+
+            existingToy.Name_toy = toy.Name_toy;
+            existingToy.Type_toy = toy.Type_toy;
+            existingToy.Classification_toy = toy.Classification_toy;
+            existingToy.Brand_toy = toy.Brand_toy;
+            existingToy.Price_toy = toy.Price_toy;
 
             try
             {
-                var existingToy = await _context.Toys.FindAsync(id);
-                if (existingToy == null) return NotFound();
-
-                _context.Entry(toy).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-                return NoContent();
+                return NoContent(); 
             }
             catch (Exception ex)
             {
