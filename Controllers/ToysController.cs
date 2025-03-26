@@ -103,7 +103,6 @@ namespace ToyStore_API.Controllers
                 var existingToy = await _context.Toys.FindAsync(id);
                 if (existingToy == null) return NotFound();
 
-                // Atualiza campos manualmente
                 existingToy.Name_toy = toy.Name_toy;
                 existingToy.Type_toy = toy.Type_toy;
                 existingToy.Classification_toy = toy.Classification_toy;
